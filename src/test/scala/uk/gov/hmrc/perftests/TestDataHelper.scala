@@ -31,7 +31,7 @@ class TestDataHelper extends MongoSupport {
   val repository = new MongoCacheRepository(
     mongoComponent = mongoComponent,
     collectionName = "cip-phone-number-verification",
-    ttl = 1.minute,
+    ttl = 10.minute,
     timestampSupport = new CurrentTimestampSupport(),
     cacheIdType = CacheIdType.SimpleCacheId
   )
