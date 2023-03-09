@@ -19,7 +19,6 @@ package uk.gov.hmrc.perftests
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
-import play.api.libs.json.Json
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 import java.lang.reflect.InvocationTargetException
@@ -59,7 +58,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
   def getPasscode: String = {
     try {
       val testDataHelper = new TestDataHelper
-      testDataHelper.getPasscode(phoneNumber).get.passcode
+      testDataHelper.getPhoneNumberAndPasscodeData(phoneNumber).get.passcode
     } catch {
       case e: InvocationTargetException => ""
       case e: NoSuchElementException => ""

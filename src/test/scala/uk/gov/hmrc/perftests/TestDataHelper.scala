@@ -35,8 +35,8 @@ class TestDataHelper extends MongoSupport {
     timestampSupport = new CurrentTimestampSupport(),
     cacheIdType = CacheIdType.SimpleCacheId
   )
-  def getPasscode(phoneNumber: String): Option[PhoneNumberAndPasscodeData] = {
+  def getPhoneNumberAndPasscodeData(phoneNumber: String): Option[PhoneNumberAndPasscodeData] = {
     Await.result(
-      repository.get[PhoneNumberAndPasscodeData](phoneNumber)(DataKey("cip-phone-number-verification")), 20.seconds)
+      repository.get[PhoneNumberAndPasscodeData](phoneNumber)(DataKey("cip-phone-number-verification")), 4.seconds)
   }
 }
