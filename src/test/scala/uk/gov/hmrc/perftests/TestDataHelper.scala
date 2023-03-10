@@ -16,22 +16,24 @@
 
 package uk.gov.hmrc.perftests
 
-import uk.gov.hmrc.mongo.CurrentTimestampSupport
+import uk.gov.hmrc.mongo.{CurrentTimestampSupport, MongoComponent}
 import uk.gov.hmrc.mongo.cache.{CacheIdType, DataKey, MongoCacheRepository}
 import uk.gov.hmrc.mongo.test.MongoSupport
+import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.DurationInt
 
-class TestDataHelper extends MongoSupport {
+class TestDataHelper extends MongoSupport with ServicesConfiguration {
 
   override def databaseName: String = "cip-phone-number-verification"
+  override val mongoUri = applicationConfig.getString("mongodb.uri")
 
   val repository = new MongoCacheRepository(
-    mongoComponent = mongoComponent,
+    mongoComponent = MongoComponent(mongoUri),
     collectionName = "cip-phone-number-verification",
-    ttl = 10.minute,
+    ttl = 1.minute,
     timestampSupport = new CurrentTimestampSupport(),
     cacheIdType = CacheIdType.SimpleCacheId
   )
