@@ -21,21 +21,19 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-import java.lang.reflect.InvocationTargetException
-
 object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
   val baseUrl: String = baseUrlFor("cip-phone-number")
+  val testOnlyBaseUrl: String = baseUrlFor("cip-phone-number-verification")
   val route: String   = "/customer-insight-platform/phone-number"
   val phoneNumber = "+447912204199"
-
   val payload =
     s"""
        |{"phoneNumber" : "${phoneNumber}" }
       """.stripMargin
 
   val verifyPhoneNumber: HttpRequestBuilder =
-    http("Verify phone number call")
+    http("Initiate phone number verification")
       .post(s"$baseUrl$route/verify": String)
       .body(StringBody(payload))
       .header("Content-Type", "application/json")
@@ -43,29 +41,23 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .header("Authorization", "fake-token")
       .check(status.is(200))
 
-  val passcode = getPasscode
+  val getPasscode: HttpRequestBuilder = {
+    http("Retrieve a Passcode for the phone number verification")
+      .post(s"$testOnlyBaseUrl/test-only/retrieve/passcode": String)
+      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}"}"""))
+      .header("Content-Type", "application/json")
+      .header("Accept", "application/json")
+      .check(status.is(200))
+      .check(jsonPath("$.passcode").saveAs("passcode"))
+  }
   
   val verifyPasscode: HttpRequestBuilder = {
-    http("Verify a Passcode for the email")
+    http("Verify a Passcode for the phone number")
       .post(s"$baseUrl$route/verify/passcode": String)
-      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "passcode": "${passcode}" }"""))
+      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "passcode": "$${passcode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .header("Authorization", "fake-token")
       .check(status.is(200))
-  }
-
-  def getPasscode: String = {
-    try {
-      val testDataHelper = new TestDataHelper
-      testDataHelper.getPhoneNumberAndPasscodeData(phoneNumber).get.passcode
-    } catch {
-      case e: InvocationTargetException => ""
-      case e: NoSuchElementException => ""
-      case e: NullPointerException => ""
-    }
-    finally {
-      println("done!")
-    }
   }
 }
