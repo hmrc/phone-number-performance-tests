@@ -13,10 +13,10 @@ object Dependencies {
     "com.typesafe.play"     %% "play-ws-standalone-json"  % "2.1.2"         % Test,
     "uk.gov.hmrc.mongo"     %% "hmrc-mongo-test-play-28"  % "0.71.0"        % Test,
 
-    "com.typesafe.akka"     % "akka-stream"                % "2.6.15"       % Test,
-    "com.typesafe.akka"     % "akka-actor-typed"           % "2.6.15"       % Test,
-    "com.typesafe.akka"     % "akka-protobuf-v3"           % "2.6.15"       % Test,
-    "com.typesafe.akka"     % "akka-serialization-jackson" % "2.6.15"       % Test
+    "com.typesafe.akka"     %% "akka-stream"                % "2.6.15"       % Test,
+    "com.typesafe.akka"     %% "akka-actor-typed"           % "2.6.15"       % Test,
+    "com.typesafe.akka"     %% "akka-protobuf-v3"           % "2.6.15"       % Test,
+    "com.typesafe.akka"     %% "akka-serialization-jackson" % "2.6.15"       % Test
   )
 }
 
