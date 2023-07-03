@@ -1,7 +1,7 @@
 lazy val root = (project in file("."))
   .enablePlugins(GatlingPlugin)
   .settings(
-    name := "cip-phone-number-performance-tests",
+    name := "phone-number-performance-tests",
     version := "0.1.0-SNAPSHOT",
     scalaVersion := "2.13.11",
     //implicitConversions & postfixOps are Gatling recommended -language settings
