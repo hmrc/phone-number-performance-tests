@@ -12,21 +12,22 @@ object Dependencies {
     "com.typesafe.play"     %% "play-ahc-ws-standalone"   % "2.1.2"         % Test,
     "com.typesafe.play"     %% "play-ws-standalone-json"  % "2.1.2"         % Test,
     "uk.gov.hmrc.mongo"     %% "hmrc-mongo-test-play-28"  % "0.71.0"        % Test,
-
-    "com.typesafe.akka"     %% "akka-stream"                % "2.6.15"       % Test,
-    "com.typesafe.akka"     %% "akka-actor-typed"           % "2.6.15"       % Test,
-    "com.typesafe.akka"     %% "akka-protobuf-v3"           % "2.6.15"       % Test,
-    "com.typesafe.akka"     %% "akka-serialization-jackson" % "2.6.15"       % Test
   )
 }
 
-// object DependencyOverrides {
+object DependencyOverrides {
 
-//   val test = Seq(
-//     "com.typesafe.akka"     % "akka-stream"                % "2.6.15"       % Test,
-//     "com.typesafe.akka"     % "akka-actor-typed"           % "2.6.15"       % Test,
-//     "com.typesafe.akka"     % "akka-protobuf-v3"           % "2.6.15"       % Test,
-//     "com.typesafe.akka"     % "akka-serialization-jackson" % "2.6.15"       % Test
-//   )
+  val test = Seq(
+    "com.typesafe.akka"          %% "akka-stream"                % "2.6.15"       % Test,
+    "com.typesafe.akka"          %% "akka-actor-typed"           % "2.6.15"       % Test,
+    "com.typesafe.akka"          %% "akka-protobuf-v3"           % "2.6.15"       % Test,
+    "com.typesafe.akka"          %% "akka-serialization-jackson" % "2.6.15"       % Test,
 
-// }
+    "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8"          % "2.12.3" % Test,
+    "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310"        % "2.12.3" % Test,
+    "com.fasterxml.jackson.module"   % "jackson-module-parameter-names" % "2.12.3" % Test,
+    "com.fasterxml.jackson.module"   % "jackson-module-paranamer"       % "2.12.3" % Test,
+    "com.fasterxml.jackson.module"   % "jackson-module-scala_2.13"      % "2.12.3" % Test,
+  )
+
+}

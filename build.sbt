@@ -10,5 +10,5 @@ lazy val root = (project in file("."))
     // These testOptions are not compatible with `sbt gatling:test`. So we have to override testOptions here.
     Test / testOptions := Seq.empty,
     libraryDependencies ++= Dependencies.test,
-    /* dependencyOverrides ++= DependencyOverrides.test */
+    dependencyOverrides ++= DependencyOverrides.test
   )
