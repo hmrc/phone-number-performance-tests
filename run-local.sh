@@ -20,6 +20,6 @@ else
     echo ""
 fi
 
-sm --start CIP_PHONE_NUMBER_ALL -r
+sm --start PHONE_NUMBER_ALL -r
 sbt -Dperftest.runSmokeTest=${FULL:=$SMOKE_TEST} -DrunLocal=true gatling:test
-sm --stop CIP_PHONE_NUMBER_ALL -r
+sm --stop PHONE_NUMBER_ALL -r
