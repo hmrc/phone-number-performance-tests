@@ -1,5 +1,5 @@
-# cip-phone-number-performance-tests
-Performance test suite for the `cip-phone-number`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
+# phone-number-performance-tests
+Performance test suite for the `phone-number`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
 
 ## Running the tests
 

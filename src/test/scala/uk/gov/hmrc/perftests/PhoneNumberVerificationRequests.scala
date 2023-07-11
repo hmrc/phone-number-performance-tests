@@ -23,8 +23,8 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
-  val baseUrl: String = baseUrlFor("cip-phone-number")
-  val testOnlyBaseUrl: String = baseUrlFor("cip-phone-number-verification")
+  val baseUrl: String = baseUrlFor("phone-number")
+  val testOnlyBaseUrl: String = baseUrlFor("phone-number-verification")
   val route: String   = "/customer-insight-platform/phone-number"
   val phoneNumber = "+447912204199"
   val payload =
