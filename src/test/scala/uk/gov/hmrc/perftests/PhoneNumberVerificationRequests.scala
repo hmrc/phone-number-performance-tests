@@ -25,7 +25,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
   val baseUrl: String = baseUrlFor("phone-number")
   val testOnlyBaseUrl: String = baseUrlFor("phone-number-verification")
-  val route: String   = "/customer-insight-platform/phone-number"
+  val route: String   = "/phone-number"
   val phoneNumber = "+447912204199"
   val payload =
     s"""
