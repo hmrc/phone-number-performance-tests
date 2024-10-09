@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
-  val baseUrl: String = baseUrlFor("phone-number")
+  val baseUrl: String = baseUrlFor("phone-number-verification")
   val testOnlyBaseUrl: String = baseUrlFor("phone-number-verification")
-  val route: String   = "/phone-number"
+  val route: String   = "/phone-number-verification"
   val phoneNumber = "+447912204199"
   val payload =
     s"""
@@ -34,7 +34,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
   val verifyPhoneNumber: HttpRequestBuilder =
     http("Initiate phone number verification")
-      .post(s"$baseUrl$route/verify": String)
+      .post(s"$baseUrl$route/send-code": String)
       .body(StringBody(payload))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
@@ -48,13 +48,13 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
-      .check(jsonPath("$.passcode").saveAs("passcode"))
+      .check(jsonPath("$.verificationCode").saveAs("passcode"))
   }
   
   val verifyPasscode: HttpRequestBuilder = {
     http("Verify a Passcode for the phone number")
-      .post(s"$baseUrl$route/verify/passcode": String)
-      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "passcode": "$${passcode}" }"""))
+      .post(s"$baseUrl$route/verify-code": String)
+      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "verificationCode": "$${passcode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .header("Authorization", "fake-token")
