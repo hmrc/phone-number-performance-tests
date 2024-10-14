@@ -11,7 +11,7 @@ object Dependencies {
     "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion  % Test,
     "com.typesafe.play"     %% "play-ahc-ws-standalone"   % "2.1.2"         % Test,
     "com.typesafe.play"     %% "play-ws-standalone-json"  % "2.1.2"         % Test,
-    "uk.gov.hmrc.mongo"     %% "hmrc-mongo-test-play-28"  % "0.71.0"        % Test,
+    "uk.gov.hmrc.mongo"     %% "hmrc-mongo-test-play-30"  % "1.6.0"        % Test,
   )
 }
 
