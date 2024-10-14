@@ -5,6 +5,7 @@ object Dependencies {
   private val gatlingVersion = "3.6.1"
 
   val test = Seq(
+    "org.slf4j"             % "slf4j-simple"              % "2.0.13"        % Test,
     "com.typesafe"          % "config"                    % "1.3.1"         % Test,
     "uk.gov.hmrc"           %% "performance-test-runner"  % "5.6.0"         % Test,
     "io.gatling"            % "gatling-test-framework"    % gatlingVersion  % Test,
