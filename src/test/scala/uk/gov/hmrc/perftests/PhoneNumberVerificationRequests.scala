@@ -43,7 +43,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
   val getPasscode: HttpRequestBuilder = {
     http("Retrieve a Passcode for the phone number verification")
-      .post(s"$testOnlyBaseUrl/test-only/retrieve/passcode": String)
+      .post(s"$testOnlyBaseUrl/test-only/retrieve/verification-code": String)
       .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}"}"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
