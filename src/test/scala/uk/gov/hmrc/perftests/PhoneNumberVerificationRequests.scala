@@ -38,7 +38,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .body(StringBody(payload))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
-      .header("Authorization", "fake-token")
+//      .header("Authorization", "fake-token")
       .check(status.is(200))
 
   val getPasscode: HttpRequestBuilder = {
@@ -57,7 +57,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "verificationCode": "$${passcode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
-      .header("Authorization", "fake-token")
+//      .header("Authorization", "fake-token")
       .check(status.is(200))
   }
 }
