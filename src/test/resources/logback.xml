@@ -16,7 +16,7 @@
     <logger name="uk.gov.hmrc.performance" level="TRACE"/>
 
     <logger name="io.gatling.http.engine.response" level="DEBUG" additivity="false">
-        <appender-ref ref="ERROR"/>
+        <appender-ref ref="CONSOLE"/>
     </logger>
 
     <root level="WARN">
