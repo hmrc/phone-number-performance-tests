@@ -40,6 +40,8 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .header("Accept", "application/json")
 //      .header("Authorization", "fake-token")
       .check(status.is(200))
+      .check(bodyString.saveAs("responseBody"))) // this will print the whole response body
+      .exec { session => println(session("responseBody").as[String]); session}
 
   val getPasscode: HttpRequestBuilder = {
     http("Retrieve a Passcode for the phone number verification")
