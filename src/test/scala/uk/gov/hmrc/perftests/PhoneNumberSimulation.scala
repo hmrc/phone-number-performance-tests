@@ -20,6 +20,7 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import PhoneNumberVerificationRequests.{getPasscode, verifyPasscode, verifyPhoneNumber}
 
 class PhoneNumberSimulation extends PerformanceTestRunner {
+  println("Hello World")
   setup("valid-phone-verification", "valid-phone-verification") withRequests (
     verifyPhoneNumber,
     getPasscode,
