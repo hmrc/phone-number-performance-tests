@@ -39,7 +39,6 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
-      .check(bodyString.saveAs("responseBody")) // this will print the whole response body
 
   val getPasscode: HttpRequestBuilder = {
     http("Retrieve a Passcode for the phone number verification")
