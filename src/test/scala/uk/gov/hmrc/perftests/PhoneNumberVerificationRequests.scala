@@ -40,8 +40,8 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .header("Accept", "application/json")
       .check(status.is(200))
 
-  val getPasscode: HttpRequestBuilder = {
-    http("Retrieve a Passcode for the phone number verification")
+  val getVerificationCode: HttpRequestBuilder = {
+    http("Retrieve a VerificationCode for the phone number verification")
       .post(s"$testOnlyBaseUrl/test-only/retrieve/verification-code": String)
       .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}"}"""))
       .header("Content-Type", "application/json")
@@ -50,8 +50,8 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .check(jsonPath("$.verificationCode").saveAs("verificationCode"))
   }
   
-  val verifyPasscode: HttpRequestBuilder = {
-    http("Verify a Passcode for the phone number")
+  val verifyVerificationCode: HttpRequestBuilder = {
+    http("Verify a VerificationCode for the phone number")
       .post(s"$baseUrl$route/verify-code": String)
       .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "verificationCode": "$${verificationCode}" }"""))
       .header("Content-Type", "application/json")
