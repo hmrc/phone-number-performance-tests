@@ -17,13 +17,13 @@
 package uk.gov.hmrc.perftests
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import PhoneNumberVerificationRequests.{getPasscode, verifyPasscode, verifyPhoneNumber}
+import PhoneNumberVerificationRequests.{getVerificationCode, verifyVerificationCode, verifyPhoneNumber}
 
 class PhoneNumberSimulation extends PerformanceTestRunner {
   setup("valid-phone-verification", "valid-phone-verification") withRequests (
     verifyPhoneNumber,
-    getPasscode,
-    verifyPasscode
+    getVerificationCode,
+    verifyVerificationCode
   )
   runSimulation()
 }
