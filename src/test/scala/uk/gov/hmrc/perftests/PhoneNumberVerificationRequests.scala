@@ -23,39 +23,48 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
-  val baseUrl: String = baseUrlFor("phone-number-verification")
-  val testOnlyBaseUrl: String = baseUrlFor("phone-number-verification")
-  val route: String   = "/phone-number-verification"
-  val phoneNumber = "+447912204199"
-  val payload =
-    s"""
-       |{"phoneNumber" : "${phoneNumber}" }
-      """.stripMargin
+  val baseUrl: String             = baseUrlFor("phone-number-gateway")
+  val testBaseUrl: String         = baseUrlFor("phone-number-verification")
+  val route: String               = "/phone-number-gateway"
+  val phoneNumber: String         = "07912204199"
+  val phoneNumberToVerify: String = "+447912204199"
+  val payload: String             = s"""{"phoneNumber" : "$phoneNumber"}"""
 
-  val verifyPhoneNumber: HttpRequestBuilder =
+  val healthUrl       = s"$baseUrl/ping/ping"
+  val sendCodeUrl     = s"$baseUrl$route/send-code"
+  val retrieveCodeUrl = s"$testBaseUrl/test-only/retrieve/verification-code"
+  val verifyCodeUrl   = s"$baseUrl$route/verify-code"
+
+  val health: HttpRequestBuilder =
     http("Initiate phone number verification")
-      .post(s"$baseUrl$route/send-code": String)
+      .get(healthUrl)
       .body(StringBody(payload))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
 
-  val getVerificationCode: HttpRequestBuilder = {
+  val verifyPhoneNumber: HttpRequestBuilder =
+    http("Initiate phone number verification")
+      .post(sendCodeUrl)
+      .body(StringBody(payload))
+      .header("Content-Type", "application/json")
+      .header("Accept", "application/json")
+      .check(status.is(200))
+
+  val getVerificationCode: HttpRequestBuilder =
     http("Retrieve a VerificationCode for the phone number verification")
-      .post(s"$testOnlyBaseUrl/test-only/retrieve/verification-code": String)
-      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}"}"""))
+      .post(retrieveCodeUrl)
+      .body(StringBody(s"""{"phoneNumber" : "$phoneNumber"}"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
       .check(jsonPath("$.verificationCode").saveAs("verificationCode"))
-  }
-  
-  val verifyVerificationCode: HttpRequestBuilder = {
+
+  val verifyVerificationCode: HttpRequestBuilder =
     http("Verify a VerificationCode for the phone number")
-      .post(s"$baseUrl$route/verify-code": String)
-      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "verificationCode": "$${verificationCode}" }"""))
+      .post(verifyCodeUrl)
+      .body(StringBody(s"""{"phoneNumber" : "$phoneNumberToVerify", "verificationCode": "$${verificationCode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
-  }
 }
