@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object PhoneNumberVerificationRequests extends ServicesConfiguration {
 
-  val baseUrl: String = baseUrlFor("phone-number-verification")
+  val baseUrl: String         = baseUrlFor("phone-number-gateway")
+  val route: String           = "/phone-number-gateway"
   val testOnlyBaseUrl: String = baseUrlFor("phone-number-verification")
-  val route: String   = "/phone-number-verification"
-  val phoneNumber = "+447912204199"
-  val payload =
+  val phoneNumber             = "+447912204199"
+  val payload                 =
     s"""
-       |{"phoneNumber" : "${phoneNumber}" }
+       |{"phoneNumber" : "$phoneNumber" }
       """.stripMargin
 
   val verifyPhoneNumber: HttpRequestBuilder =
@@ -40,22 +40,20 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .header("Accept", "application/json")
       .check(status.is(200))
 
-  val getVerificationCode: HttpRequestBuilder = {
+  val getVerificationCode: HttpRequestBuilder =
     http("Retrieve a VerificationCode for the phone number verification")
       .post(s"$testOnlyBaseUrl/test-only/retrieve/verification-code": String)
-      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}"}"""))
+      .body(StringBody(s"""{"phoneNumber" : "$phoneNumber"}"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
       .check(jsonPath("$.verificationCode").saveAs("verificationCode"))
-  }
-  
-  val verifyVerificationCode: HttpRequestBuilder = {
+
+  val verifyVerificationCode: HttpRequestBuilder =
     http("Verify a VerificationCode for the phone number")
       .post(s"$baseUrl$route/verify-code": String)
-      .body(StringBody(s"""{"phoneNumber" : "${phoneNumber}", "verificationCode": "$${verificationCode}" }"""))
+      .body(StringBody(s"""{"phoneNumber" : "$phoneNumber", "verificationCode": "$${verificationCode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .check(status.is(200))
-  }
 }
