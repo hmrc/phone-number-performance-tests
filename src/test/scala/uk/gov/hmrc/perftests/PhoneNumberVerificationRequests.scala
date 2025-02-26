@@ -38,6 +38,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .body(StringBody(payload))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
+      .header(HttpHeaderNames.UserAgent, "pni-performance-tests")
       .check(status.is(200))
 
   val getVerificationCode: HttpRequestBuilder =
@@ -46,6 +47,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .body(StringBody(s"""{"phoneNumber" : "$phoneNumber"}"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
+      .header(HttpHeaderNames.UserAgent, "pni-performance-tests")
       .check(status.is(200))
       .check(jsonPath("$.verificationCode").saveAs("verificationCode"))
 
@@ -55,5 +57,6 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .body(StringBody(s"""{"phoneNumber" : "$phoneNumber", "verificationCode": "$${verificationCode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
+      .header(HttpHeaderNames.UserAgent, "pni-performance-tests")
       .check(status.is(200))
 }
