@@ -26,22 +26,22 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
   val baseUrl: String         = baseUrlFor("phone-number-gateway")
   val route: String           = "/phone-number-gateway"
   val testOnlyBaseUrl: String = baseUrlFor("phone-number-verification")
-  val phoneNumber             = "+447912204199"
-  val payload                 =
+
+  def payload(phoneNumber:String)                 =
     s"""
        |{"phoneNumber" : "$phoneNumber" }
       """.stripMargin
 
-  val verifyPhoneNumber: HttpRequestBuilder =
+  def verifyPhoneNumber(phoneNumber: String): HttpRequestBuilder =
     http("Initiate phone number verification")
       .post(s"$baseUrl$route/send-code": String)
-      .body(StringBody(payload))
+      .body(StringBody(payload(phoneNumber)))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .header(HttpHeaderNames.UserAgent, "pni-performance-tests")
       .check(status.is(200))
 
-  val getVerificationCode: HttpRequestBuilder =
+  def getVerificationCode(phoneNumber: String): HttpRequestBuilder =
     http("Retrieve a VerificationCode for the phone number verification")
       .post(s"$testOnlyBaseUrl/test-only/retrieve/verification-code": String)
       .body(StringBody(s"""{"phoneNumber" : "$phoneNumber"}"""))
@@ -51,7 +51,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
       .check(status.is(200))
       .check(jsonPath("$.verificationCode").saveAs("verificationCode"))
 
-  val verifyVerificationCode: HttpRequestBuilder =
+  def verifyVerificationCode(phoneNumber: String): HttpRequestBuilder =
     http("Verify a VerificationCode for the phone number")
       .post(s"$baseUrl$route/verify-code": String)
       .body(StringBody(s"""{"phoneNumber" : "$phoneNumber", "verificationCode": "$${verificationCode}" }"""))
