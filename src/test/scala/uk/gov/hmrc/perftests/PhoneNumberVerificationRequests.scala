@@ -54,7 +54,7 @@ object PhoneNumberVerificationRequests extends ServicesConfiguration {
   def verifyVerificationCode(phoneNumber: String): HttpRequestBuilder =
     http("Verify a VerificationCode for the phone number")
       .post(s"$baseUrl$route/verify-code": String)
-      .body(StringBody(s"""{"phoneNumber" : "$phoneNumber", "verificationCode": "$${verificationCode}" }"""))
+      .body(StringBody(s"""{"phoneNumber" : "$phoneNumber", "verificationCode": "#{verificationCode}" }"""))
       .header("Content-Type", "application/json")
       .header("Accept", "application/json")
       .header(HttpHeaderNames.UserAgent, "pni-performance-tests")
