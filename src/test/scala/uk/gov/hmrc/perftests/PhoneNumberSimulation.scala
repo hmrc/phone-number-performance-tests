@@ -21,9 +21,9 @@ import PhoneNumberVerificationRequests.{getVerificationCode, verifyVerificationC
 
 class PhoneNumberSimulation extends PerformanceTestRunner {
   setup("valid-phone-verification", "valid-phone-verification") withRequests (
-    verifyPhoneNumber(s"$${phoneNumber}"),
-    getVerificationCode(s"$${phoneNumber}"),
-    verifyVerificationCode(s"$${phoneNumber}")
+    verifyPhoneNumber("#{phoneNumber}"),
+    getVerificationCode("#{phoneNumber}"),
+    verifyVerificationCode("#{phoneNumber}")
   )
   runSimulation()
 }
